@@ -85,7 +85,7 @@ def plot_impulse_response(h: np.ndarray, figure_path: str):
 
     ax_h[0].legend()
     ax_h[0].set_title("impulse responses")
-    ax_h[1].set_xlabel("frequency [Hz]")
+    ax_h[1].set_xlabel("filter taps")
     ax_h[0].set_ylabel("$h[.]$")
     ax_h[1].set_ylabel("$|h[.]|$")
     ax_h[0].grid(True)

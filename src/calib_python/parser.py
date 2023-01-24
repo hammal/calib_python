@@ -70,6 +70,11 @@ def _parse_arguments_filter() -> argparse.Namespace:
         # required=True
     )
     plot.add_argument(
+        "--linear",
+        help="linear frequency axis in Bode plot",
+        action='store_true',
+    )
+    plot.add_argument(
         "-p",
         "--path",
         help="save to path",
@@ -102,6 +107,11 @@ def _parse_arguments_visualize() -> argparse.Namespace:
         "--bandwidth",
         help="specify nominal bandwidth",
         default=1.0,
+    )
+    parser.add_argument(
+        "--linear",
+        help="linear frequency axis in Bode plot",
+        action='store_true',
     )
 
     parser.add_argument(

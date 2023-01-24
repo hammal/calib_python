@@ -43,15 +43,22 @@ def psd_evaluate(u_hat: np.ndarray, fs: float, BW: float, psd_size: int = 1 << 1
     }
 
 
-def plot_psd(u_hat: np.ndarray, figure_path: str, BW: float):
+def plot_psd(u_hat: np.ndarray, figure_path: str, BW: float, linear: bool=False):
     # u_hat = np.load(data_path)
     res = psd_evaluate(u_hat, 1.0, BW, psd_size)
     f_psd, ax_psd = plt.subplots(1, 1, sharex=True)
-    ax_psd.semilogx(
-        res["f"],
-        10 * np.log10(res["psd"]),
-        label=f"SNR: {res['est_SNR']:.2f} dB",
-    )
+    if linear:
+        ax_psd.plot(
+            res["f"],
+            10 * np.log10(res["psd"]),
+            label=f"SNR: {res['est_SNR']:.2f} dB",
+        )
+    else:
+        ax_psd.semilogx(
+            res["f"],
+            10 * np.log10(res["psd"]),
+            label=f"SNR: {res['est_SNR']:.2f} dB",
+        )
     ax_psd.legend()
     ax_psd.set_title("power spectral density (PSD)")
     ax_psd.set_xlabel("frequency")
@@ -97,7 +104,7 @@ def plot_impulse_response(h: np.ndarray, figure_path: str):
     plt.close(f_h)
 
 
-def bode_plot(h: np.ndarray, figure_path: str):
+def bode_plot(h: np.ndarray, figure_path: str, linear: bool=False):
     f_h, ax_h = plt.subplots(2, 1, sharex=True)
     M = h.shape[1]
     for m in range(M):
@@ -106,17 +113,28 @@ def bode_plot(h: np.ndarray, figure_path: str):
         h_freq = np.fft.rfft(h_version)
         freq = np.fft.rfftfreq(h_version.size)
 
-
-        ax_h[1].semilogx(
-            freq,
-            np.angle(h_freq),
-            label="$h_" + f"{m}" + "$",
-        )
-        ax_h[0].semilogx(
-            freq,
-            20 * np.log10(np.abs(h_freq)),
-            label="$h_" + f"{m}" + "$",
-        )
+        if linear:
+            ax_h[1].plot(
+                freq,
+                np.angle(h_freq),
+                label="$h_" + f"{m}" + "$",
+            )
+            ax_h[0].plot(
+                freq,
+                np.abs(h_freq),
+                label="$h_" + f"{m}" + "$",
+            )
+        else:
+            ax_h[1].semilogx(
+                freq,
+                np.angle(h_freq),
+                label="$h_" + f"{m}" + "$",
+            )
+            ax_h[0].semilogx(
+                freq,
+                20 * np.log10(np.abs(h_freq)),
+                label="$h_" + f"{m}" + "$",
+            )
 
     ax_h[0].legend()
     ax_h[0].set_title("Bode diagram")

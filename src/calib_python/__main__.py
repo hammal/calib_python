@@ -62,7 +62,7 @@ def main_filter():
         _data_folder_exist(args.path)
         filter = np.load(args.filter)
         plot_impulse_response(filter, os.path.join(args.path, 'impulse_response.png'))
-        bode_plot(filter, os.path.join(args.path, 'bode_plot.png'))
+        bode_plot(filter, os.path.join(args.path, 'bode_plot.png'), bool(args.linear))
 
     exit(0)
 
@@ -93,7 +93,7 @@ def main_visualize():
 
     filters = [f"{os.path.join(args.path, f)}.png" for f in ['psd', 'time']]
 
-    plot_psd(data, filters[0], float(args.bandwidth))
+    plot_psd(data, filters[0], float(args.bandwidth), bool(args.linear))
     plot_time_domain(data, filters[1])
 
     exit(0)

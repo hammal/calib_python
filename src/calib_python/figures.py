@@ -82,12 +82,12 @@ def plot_impulse_response(h: np.ndarray, figure_path: str):
         ax_h[0].plot(
             np.arange(h_version.size) - h_version.size // 2,
             h_version,
-            label="$h_" + f"{m}" + "$",
+            label="$h_{" + f"{m}" + "}$",
         )
         ax_h[1].semilogy(
             np.arange(h_version.size) - h_version.size // 2,
             np.abs(h_version),
-            label="$h_" + f"{m}" + "$",
+            label="$h_{" + f"{m}" + "}$",
         )
 
     ax_h[0].legend()
@@ -117,23 +117,23 @@ def bode_plot(h: np.ndarray, figure_path: str, linear: bool=False):
             ax_h[1].plot(
                 freq,
                 np.angle(h_freq),
-                label="$h_" + f"{m}" + "$",
+                label="$h_{" + f"{m}" + "}$",
             )
             ax_h[0].plot(
                 freq,
                 np.abs(h_freq),
-                label="$h_" + f"{m}" + "$",
+                label="$h_{" + f"{m}" + "}$",
             )
         else:
             ax_h[1].semilogx(
                 freq,
                 np.angle(h_freq),
-                label="$h_" + f"{m}" + "$",
+                label="$h_{" + f"{m}" + "}$",
             )
             ax_h[0].semilogx(
                 freq,
                 20 * np.log10(np.abs(h_freq)),
-                label="$h_" + f"{m}" + "$",
+                label="$h_{" + f"{m}" + "}$",
             )
 
     ax_h[0].legend()
